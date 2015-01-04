@@ -3,10 +3,10 @@ with programs. xmalloc.h supplies the function prototypes.
 
 void *xmalloc(size_t bytes):
 This is a wrapper function for malloc that does error checking, and adds 
-information about the new dynamic memory region to a red-black tree. The tree is 
-made up of structs that contain the address of the region, the size of the 
-region, a flag that denotes if this region was freed or not, and pointers to the
-left and right children. The function returns a pointer to the new region
+information about the new dynamic memory region to a red-black tree. The tree
+is made up of structs that contain the address of the region, the size of the 
+region, a flag that denotes if this region was freed or not, and pointers to
+the left and right children. The function returns a pointer to the new region
 of memory, or calls exit if malloc failed.
 
 void xfree(void *ptr):
@@ -32,7 +32,7 @@ Makefile:
 A makefile is supplied to compile and link the test programs with xmalloc. If
 xmalloc.o is not compiled it is compiled just once and linked with the test
 programs. The targets are:
-all: compiles all the the test programs and links it with xmalloc (default target).
+all: compiles all the the test programs and links it with xmalloc (default).
 run: runs all the test programs, compiling and linking them as needed.
 run-%: runs the specified test program, compiling and linking as needed.
 test-%: compiles the specified test program and links it with xmalloc.
