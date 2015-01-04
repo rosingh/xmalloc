@@ -55,7 +55,7 @@ void *xmalloc(size_t bytes)
 		exit(EXIT_FAILURE);
 	}
 	/* On the off chance that malloc returns an address that was previous freed
-	 * first search for it in the list
+	 * first search for it in the tree.
 	 */
 	malloc_info *info = search(new_region);
 	if (info != NULL)
