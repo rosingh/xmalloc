@@ -1,0 +1,40 @@
+Error checking library that wraps around malloc and free. Can be linked easily
+with programs. xmalloc.h supplies the function prototypes.
+
+void *xmalloc(size_t bytes):
+This is a wrapper function for malloc that does error checking, and adds 
+information about the new dynamic memory region to a red-black tree. The tree is 
+made up of structs that contain the address of the region, the size of the 
+region, a flag that denotes if this region was freed or not, and pointers to the
+left and right children. The function returns a pointer to the new region
+of memory, or calls exit if malloc failed.
+
+void xfree(void *ptr):
+This is a wrapper function for free that checks if the pointer supplied is
+pointing to a region that was already freed, is not a dynamic memory region
+(not allocated with xmalloc), or is in the middle of a currently allocated
+region before freeing. The function searches the malloc info tree to find
+if the pointer supplied is in the tree. If it is it then checks if it has
+already been freed before or is in the middle of another region, and 
+prints the appropriate error if there is one. If there is no error the region
+is successfully freed. If the address is not in the malloc info list then an
+error is printed that states that this is not a dynamic memory region.
+
+Test programs:
+A series of test programs were written to test the functionality of xmalloc and
+xfree.
+test-01: Tests freeing in the middle of a dynamic memory region.
+test-02: Tests detecting a memory leak through double mallocing.
+test-03: Tests double freeing.
+test-04: Tests everything with a lot of calls to xmalloc and xfree.
+
+Makefile:
+A makefile is supplied to compile and link the test programs with xmalloc. If
+xmalloc.o is not compiled it is compiled just once and linked with the test
+programs. The targets are:
+all: compiles all the the test programs and links it with xmalloc (default target).
+run: runs all the test programs, compiling and linking them as needed.
+run-%: runs the specified test program, compiling and linking as needed.
+test-%: compiles the specified test program and links it with xmalloc.
+xmalloc.o: compiles xmalloc into an object file to be used for linking later.
+clean: removes all the test executables and xmalloc.o
